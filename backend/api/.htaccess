@@ -1,0 +1,24 @@
+RewriteEngine On
+
+# CORS handled entirely in PHP files - no duplicate headers
+# # Header always set Access-Control-Allow-Origin "*"
+# # Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+# # Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+# # Header always set Access-Control-Max-Age "3600"
+
+# Handle preflight requests via PHP scripts
+# RewriteCond %{REQUEST_METHOD} OPTIONS
+# RewriteRule ^(.*)$ - [R=200,L]
+
+# Route specific endpoints to their PHP files
+RewriteRule ^auth/login$ auth/login.php [L]
+RewriteRule ^demandes/create$ demandes/create.php [L]
+RewriteRule ^demandes/read$ demandes/read.php [L]
+RewriteRule ^demandes/update_status$ demandes/update_status.php [L]
+RewriteRule ^products/read$ products/read.php [L]
+RewriteRule ^products/search$ products/search.php [L]
+
+# Route remaining requests to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
